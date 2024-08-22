@@ -7,12 +7,12 @@ const creds = loadCredentials();
 // Store WebSocket instances per user
 const webSockets = {};
 
-// Process each user
-Object.keys(creds).forEach((key) => {
-  const user = creds[key];
+const manageConnection = async () => {
+  // Process each user
+  Object.keys(creds).forEach(async (key) => {
+    const user = creds[key];
 
-  // Define a function to manage the connection and reconnection
-  const manageConnection = async () => {
+    // Define a function to manage the connection and reconnection
     // Close the existing WebSocket if open
     if (
       webSockets[user.username] &&
@@ -23,16 +23,12 @@ Object.keys(creds).forEach((key) => {
     }
 
     // Create a new WebSocket connection for the user
-    webSockets[user.username] = await connectAndSendData(
-      user.username,
-      user.password,
-      bot
-    );
-  };
+    webSockets[user.username] = await connectAndSendData(user, bot);
+  });
+};
 
-  // Initial connection
-  manageConnection();
+// Initial connection
+manageConnection();
 
-  // Set interval to reconnect every hour (3600000 milliseconds)
-  setInterval(manageConnection, 3600000); // 1 hour in milliseconds
-});
+// Set interval to reconnect every hour (3600000 milliseconds)
+setInterval(manageConnection, 3600000); // 1 hour in milliseconds

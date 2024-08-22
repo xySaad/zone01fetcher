@@ -70,13 +70,7 @@ const startBot = () => {
     }
 
     try {
-      connectAndSendData(
-        userCredentials.username,
-        userCredentials.password,
-        bot,
-        chatId,
-        "check"
-      );
+      connectAndSendData(userCredentials, bot, chatId, "check");
     } catch (error) {
       bot.sendMessage(chatId, "An error occurred while checking results.");
       console.error(error);

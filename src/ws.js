@@ -2,7 +2,9 @@ import { Login } from "./login.js";
 import WebSocket from "ws";
 
 // Function to handle the WebSocket connection process
-async function connectAndSendData(username, password, bot, chatId, command) {
+async function connectAndSendData(user, bot, chatId, command) {
+  const { username, password } = user;
+
   const notifyTGUsers = (message, link, chatId) => {
     bot.sendMessage(chatId, message);
   };
@@ -17,7 +19,7 @@ async function connectAndSendData(username, password, bot, chatId, command) {
 
     // Event listener for when the connection is open
     ws.on("open", () => {
-      console.log("Connected to WebSocket server");
+      console.log(`Connected to WebSocket server for user ${username}`);
 
       // Send a message to the WebSocket server
       ws.send(
