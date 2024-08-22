@@ -1,7 +1,6 @@
 import { Login } from "./login.js";
 import WebSocket from "ws";
 
-let ws;
 // Function to handle the WebSocket connection process
 async function connectAndSendData(username, password, bot, chatId, command) {
   const notifyTGUsers = (message, link, chatId) => {
@@ -14,7 +13,7 @@ async function connectAndSendData(username, password, bot, chatId, command) {
     const wsUrl = "wss://learn.zone01oujda.ma/api/graphql-engine/v1/graphql";
 
     // Create a new WebSocket client instance
-    ws = new WebSocket(wsUrl, ["graphql-ws"]);
+    const ws = new WebSocket(wsUrl, ["graphql-ws"]);
 
     // Event listener for when the connection is open
     ws.on("open", () => {
