@@ -70,9 +70,6 @@ async function connectAndSendData(user, bot, chatId, command) {
           }\n isRefused: ${isRefused}\n Result: ${
             data.grade >= 1 && data.isLast ? "Passed" : "unknown result"
           }`;
-          if (command == "check") {
-            bot.sendMessage(chatId, infos);
-          }
           if ((data.grade >= 0 && data.grade != null) || data.isLast == true) {
             notifyTGUsers(
               "Results are out!!! check the website",
@@ -80,7 +77,10 @@ async function connectAndSendData(user, bot, chatId, command) {
               chatId
             );
           }
-
+          if (command == "check") {
+            bot.sendMessage(chatId, infos);
+            ws.close();
+          }
           break;
 
         default:
@@ -95,7 +95,7 @@ async function connectAndSendData(user, bot, chatId, command) {
 
     // Event listener for when the connection is closed
     ws.on("close", () => {
-      console.log("WebSocket connection closed");
+      console.log("WebSocket connection closed for user", username);
     });
   } else {
     console.log("Error while getting jwtToken");
