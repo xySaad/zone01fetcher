@@ -2,13 +2,18 @@ import TelegramBot from "node-telegram-bot-api";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import creds from "../creds.json" assert { type: "json" };
-import { Login } from "./login.js";
 import { connectAndSendData } from "./ws.js";
+import { Login } from "./login.js";
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Path to the JSON file
+const credsPath = path.join(__dirname, "../creds.json");
+
+// Load JSON content
+const creds = JSON.parse(fs.readFileSync(credsPath, "utf8"));
 
 // Path to the JSON file where credentials will be stored
 const credentialsFile = path.join(__dirname, "userCredentials.json");
